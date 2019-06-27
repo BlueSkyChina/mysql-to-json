@@ -1,4 +1,4 @@
-# mysql-to-json
+# mysql-to-jsonline
 
 Connects to a MySQL database and exports selected data to JSON.
 
