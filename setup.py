@@ -5,7 +5,7 @@ from distutils.command.install import install as _install
 
 setup(
     name = 'mysql-to-json',
-    version = '1.0.0',
+    version = '1.0.1',
     description = 'Connects to a MySQL database and exports selected data to JSON.one row of table to one line with json style',
     author = 'Seth Black',
     author_email = 'sblack@sethserver.com',
