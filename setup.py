@@ -4,20 +4,20 @@ from setuptools import setup
 from distutils.command.install import install as _install
 
 setup(
-    name = 'mysql-to-json',
+    name = 'mysql-to-jsonline',
     version = '1.0.0',
-    description = 'Connects to a MySQL database and exports selected data to JSON.',
+    description = 'Connects to a MySQL database and exports selected data to JSON.one row of table to one line with json style',
     author = 'Seth Black',
     author_email = 'sblack@sethserver.com',
-    url = 'https://github.com/sethblack/mysql-to-json',
-    packages = ['mysqljson'],
+    url = 'https://github.com/BlueSkyChina/mysql-to-jsonline',
+    packages = ['mysqljsonline'],
     keywords = ['mysql','json','database','db','export','export tool','export utility'],
     install_requires = [
         'mysqlclient'
     ],
     entry_points = {
         'console_scripts' : [
-            'mysql-to-json = mysqljson.__main__:main'
+            'mysql-to-jsonline = mysqljson.__main__:main'
         ]
     },
     classifiers = [
@@ -36,7 +36,7 @@ Connects to a MySQL database and exports selected data to JSON.
 
 ## Usage
 
-mysql-to-json [-h] [-d DATABASE] [-H HOSTNAME] [-P PORT] [-u USER] [-p]
+mysql-to-jsonline [-h] [-d DATABASE] [-H HOSTNAME] [-P PORT] [-u USER] [-p]
                      [-e QUERY]
 
 optional arguments:
@@ -59,18 +59,18 @@ All examples simple select all table information from `information_schema` and s
 
 This assumes we have full access to the mysql database from localhost.
 
-$> mysql-to-json -e 'SELECT * FROM information_schema.tables' > tables.json
+$> mysql-to-jsonline -e 'SELECT * FROM information_schema.tables' > tables.json
 
 ### Medium Complexity
 
 This explicitly sets a user and asks for a password, while still connecting to localhost.
 
-$> mysql-to-json -d mysql -u seth -p -e 'SELECT * FROM information_schema.tables' > tables.json
+$> mysql-to-jsonline -d mysql -u seth -p -e 'SELECT * FROM information_schema.tables' > tables.json
 
 ### All The Things!
 
 This explicitly sets every command line option available.
 
-$> mysql-to-json -h mydbserver.myhost.com -P 3306 -d mysql -u seth -p -e 'SELECT * FROM information_schema.tables' > tables.json
+$> mysql-to-jsonline -h mydbserver.myhost.com -P 3306 -d mysql -u seth -p -e 'SELECT * FROM information_schema.tables' > tables.json
 """
 )
