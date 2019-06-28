@@ -10,7 +10,7 @@ setup(
     author = 'Seth Black',
     author_email = 'sblack@sethserver.com',
     url = 'https://github.com/BlueSkyChina/mysql-to-json',
-    packages = ['mysqljsonline'],
+    packages = ['mysqljson'],
     keywords = ['mysql','json','database','db','export','export tool','export utility'],
     install_requires = [
         'mysqlclient'

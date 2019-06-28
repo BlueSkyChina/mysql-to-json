@@ -27,22 +27,6 @@ def cursor_to_dict(cursor):
 
     return result
 
-def cursor_to_dicts(cursor,batch_size=1000):
-    datas = cursor.fetchmany(batch_size)
-
-    if data is None:
-        return None
-
-    desc = cursor.description
-    results = []
-    result = {}
-    for data in datas:
-        for (name, value) in zip(desc, data):
-            result[name[0]] = value
-        results.append(result)
-
-    return results
-
 def main():
     arg_parser = argparse.ArgumentParser()
 
@@ -76,47 +60,28 @@ def main():
         sys.exit()
     if args.jsonarray == 'json':
         sys.stdout.write('[')
-    if args.batchsize == 1:
-        row = cursor_to_dict(cursor)
-        first_line = True
-        while row is not None:
-            if first_line == True:
-                first_line = False
+        sys.stdout.write(os.linesep)
+    
+    row = cursor_to_dict(cursor)
+    first_line = True
+    while row is not None:
+        if first_line == True:
+            first_line = False
+        else:
+            if args.jsonarray == 'json':
+                sys.stdout.write(',')
+                sys.stdout.write(os.linesep)
             else:
-                if args.jsonarray == 'json':
-                    sys.stdout.write(',')
-                    sys.stdout.write(os.linesep)
-                else:
-                    sys.stdout.write(os.linesep)
+                sys.stdout.write(os.linesep)
 
-            json_str = json.dumps(row, default=str, ensure_ascii=False)
+        json_str = json.dumps(row, default=str, ensure_ascii=False)
 
-            sys.stdout.write(json_str)
+        sys.stdout.write(json_str)
 
-            row = cursor_to_dict(cursor)
-        if args.jsonarray == 'json':
-            sys.stdout.write(']')
-     else:
-        rows = cursor_to_dicts(cursor,args.batchsize)
-        first_line = True
-        while rows is not None:
-            for row in rows:
-                if first_line == True:
-                    first_line = False
-                else:
-                    if args.jsonarray == 'json':
-                        sys.stdout.write(',')
-                        sys.stdout.write(os.linesep)
-                    else:
-                        sys.stdout.write(os.linesep)
-
-                json_str = json.dumps(row, default=str, ensure_ascii=False)
-
-                sys.stdout.write(json_str)
-
-            rows = cursor_to_dicts(cursor,args.batchsize)
-        if args.jsonarray == 'json':
-            sys.stdout.write(']')
+        row = cursor_to_dict(cursor)
+    if args.jsonarray == 'json':
+        sys.stdout.write(os.linesep)
+        sys.stdout.write(']')
         
 
 if __name__ == "__main__":
